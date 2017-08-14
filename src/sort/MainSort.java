@@ -25,6 +25,7 @@ public class MainSort {
 
         ISort iSortf = new HeapSort();
         printIntArray(iSortf.sort(a), "堆");
+
     }
 
     public static int[] generateData(int length) {
