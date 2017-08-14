@@ -23,6 +23,5 @@ public class InsertSort implements ISort {
         }
         System.out.println("插入排序时间：" + (System.currentTimeMillis() - time));
         return a;
-
     }
 }
