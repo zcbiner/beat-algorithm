@@ -6,7 +6,7 @@ package list;
  */
 public class SinglyLinkedList<T> {
 
-    private class Node {
+    private static class Node<T> {
         private T data;
         private Node next;
 
@@ -20,13 +20,60 @@ public class SinglyLinkedList<T> {
 
     public void add(T data) {
         if (head == null) {
-            head = new Node(data);
+            head = new Node<>(data);
             tail = head;
         } else {
             Node node = new Node(data);
             tail.next = node;
             tail = node;
         }
+    }
+
+    // 求单链表中，节点的个数
+    public int size() {
+        int size = 0;
+        Node temp = head;
+        while (temp != null) {
+            size++;
+            temp = temp.next;
+        }
+        return size;
+    }
+
+    // 找单链表中倒数第k个节点
+    public Node findLastNode(int k) {
+        if (head == null || k < 0) {
+            return null;
+        }
+        Node first = head;
+        Node second = head;
+
+        for (int i = 0; i < k - 1; i++) {
+            second = second.next;
+            if (second == null) {
+                return null;
+            }
+        }
+
+        while (second.next != null) {
+            first = first.next;
+            second = second.next;
+        }
+        return first;
+    }
+
+    // 找到单链表中间节点
+    public Node findMiddleNode() {
+        if (head == null) {
+            return null;
+        }
+        Node first = head;
+        Node second = head;
+        while (second != null && second.next != null) { // 注意这个判断条件
+            second = second.next.next;
+            first = first.next;
+        }
+        return first;
     }
 
     public boolean remove(T data) {
@@ -112,4 +159,8 @@ public class SinglyLinkedList<T> {
         }
 
     }
+
+//    public static Node mergeLinkList(Node h1, Node h2) {
+//
+//    }
 }
