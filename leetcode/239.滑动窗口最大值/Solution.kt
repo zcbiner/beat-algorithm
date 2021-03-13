@@ -7,7 +7,7 @@
 // @lc code=start
 class Solution {
     fun maxSlidingWindow(nums: IntArray, k: Int): IntArray {
-        if (nums == null || nums.size < 2) {
+        if (nums.size < 2) {
             return nums
         }
         val ans = IntArray(nums.size - k + 1)
