@@ -79,14 +79,17 @@ class SelectSort(object):
 代码实现：
 
 ```
-for (int i = 1; i < arr.length; i++) {
-    int temp = arr[i];
-    int j;
-    for (j = i; j > 0 && (arr[j - 1] > temp); j--) {
-        arr[j] = arr[j -1];
-    }
-    arr[j] = temp;
-}
+class InsertSort(object):
+    def insert_sort(self, arr):
+        arr_size = len(arr)
+        for i in range(1, arr_size):
+            temp = arr[i]
+            current_index = i
+            while current_index > 0 and arr[current_index - 1] > temp:
+                arr[current_index] = arr[current_index - 1]
+                current_index -= 1
+            if current_index != i:
+                arr[current_index] = temp
 ```
 #### 四、归并排序
 > 将长度为n的记录不断划分，划分到长度为1时，再两两合并，依次递归。主要是利用分治法来处理。
