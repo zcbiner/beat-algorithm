@@ -51,16 +51,17 @@ for (int i = 0; i < arr.length; i++) {
 
 代码实现：
 
-```
-for (int i = 0; i < arr.length; i++) {
-    int minIndex = i;
-    for (int j = i + 1; j < arr.length; j++) {
-        if (arr[j] < arr[minIndex]) {
-            minIndex = j;
-        }
-    }
-    SortUtil.swap(arr, minIndex, i);
-}
+```python
+class SelectSort(object):
+    def sleect_sort(self, arr):
+        arr_size = len(arr)
+        for i in range(arr_size):
+            min_index = i
+            for j in range(i + 1, arr_size):
+                if (arr[j] < arr[min_index]):
+                    min_index = j
+            if (i != min_index):
+                arr[i], arr[min_index] = arr[min_index], arr[i]
 ```
 
 #### 三、插入排序
