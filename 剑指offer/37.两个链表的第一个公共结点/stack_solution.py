@@ -8,6 +8,7 @@ class Solution:
         if list1 is None or list2 is None:
             return None
         
+        # 将链表1数据放到栈stack1中
         stack1 = [list1]
         p1 = list1
         loop = 0
@@ -15,12 +16,15 @@ class Solution:
             p1 = p1.next
             stack1.append(p1)
             loop = loop + 1
+        
+        # 将链表2数据放到栈stack2中
         stack2 = [list2]
         p2 = list2
         while p2.next is not None:
             p2 = p2.next
             stack2.append(p2)
 
+        # 两个链表同时遍历，到第一个不相同的结点结束
         result = None
         while len(stack1) > 0 and len(stack2) > 0:
             temp = stack1.pop()

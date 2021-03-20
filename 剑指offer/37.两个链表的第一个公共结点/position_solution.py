@@ -2,22 +2,27 @@ class Node:
     def __init__(self, data):
         self.data = data
         self.next = None
-        
+
 class Solution:
     def first_common_node(self, list1, list2):
         if list1 is None or list2 is None:
             return None
+        
+        # 获取链表1的长度
         p1 = list1
         list1_count = 1
         while p1.next is not None:
             p1 = p1.next
             list1_count = list1_count + 1
+        
+        # 获取链表2的长度
         p2 = list2
         list2_count = 1
         while p2.next is not None:
             p2 = p2.next
             list2_count = list2_count +1
         
+        # 找到更长的链表并计算差值
         p_ahead = list1
         p_behind = list2
         diff = list1_count - list2_count
@@ -25,9 +30,12 @@ class Solution:
             p_ahead = list2
             p_behind = list1
             diff = list2_count - list1_count
+        
+        # 长链表先遍历到差值位置
         for i in range(diff):
             p_ahead = p_ahead.next
         
+        # 两个链表一起遍历，遇到第一个相同的结点即为结果
         while p_ahead is not p_behind:
             p_ahead = p_ahead.next
             p_behind = p_behind.next
