@@ -50,3 +50,9 @@ if p_slow is head:
 ```py
 pre.next = pre.next.next
 ```
+这个解法与解法一的时间复杂度是一样的。具体步骤为：
+1. 设置哨兵结点guard_node，chushih
+2. p_pre定义为要删除结点的前一个结点，初始化指向guard_node
+3. p_fast初始化指向头结点，开始遍历
+4. 当p_fast与p_pre相隔n（倒数第n个）时，两个指针一起遍历。
+5. 删除p_pre的下一个结点。

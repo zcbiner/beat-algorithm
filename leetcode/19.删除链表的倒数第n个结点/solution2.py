@@ -18,7 +18,7 @@ class Solution:
         guard_node = ListNode(0, head)
         p_pre = guard_node
         count = 1
-        while p_fast is not None:
+        while p_fast.next is not None:
             if count >= n:
                 p_pre = p_pre.next
             p_fast = p_fast.next
