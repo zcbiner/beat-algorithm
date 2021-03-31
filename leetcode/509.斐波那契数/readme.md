@@ -34,4 +34,19 @@ F(n) = F(n - 1) + F(n - 2)，其中 n > 1
 
 
 ### 解题思路
-
+题目已经给出了公式：
+```
+F(0) = 0，F(1) = 1
+F(n) = F(n - 1) + F(n - 2)，其中 n > 1
+```
+所以直接用递归解法就能得出解法：
+```py
+class Solution:
+    def fib(self, n: int) -> int:
+        if n == 0:
+            return 0
+        elif n == 1:
+            return 1
+        
+        return fib(n - 1) + fib(n - 2)
+```
