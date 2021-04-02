@@ -17,7 +17,9 @@ class Solution:
         prev = None
         curr = head
         while curr is not None:
+            # 先记录下一个节点，否则等下curr.next指向前一个结点会丢失
             next_node = curr.next
+            # 指向上一个结点完成翻转
             curr.next = prev
             prev = curr
             curr = next_node
