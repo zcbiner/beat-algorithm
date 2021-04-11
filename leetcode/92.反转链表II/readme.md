@@ -22,18 +22,8 @@
 进阶： 你可以使用一趟扫描完成反转吗？
 
 ### 解题
-如何翻转链表结点呢？就是把当前结点的指针指向前一个结点。代码如下：
-```py
-#p_curr表示当前遍历结点
-#p_curr_after表示p_curr的下一个结点
-#p_curr_pre表示p_curr的前一个结点
-while p_curr:
-    p_curr_after = p_curr.next
-    p_curr = p_curr_pre
-    p_curr_pre = p_curr
-    p_curr = p_curr_after
-```
-在翻转的时候注意不要丢了结点。
+如何翻转链表结点呢？就是把当前结点的指针指向前一个结点。具体看[206.反转链表](../206.反转链表/readme.md)的解题。
+
 
 在这道题中，我只要翻转left到right的结点就行了。翻转完后处理下left和right这两个结点的指向，题目就完成了。
 
