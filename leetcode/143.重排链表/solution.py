@@ -10,43 +10,31 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-import math as m
-from ..dataStruct import ListNode
-
 class Solution:
-    def reorderList(self, head: ListNode) -> None:
+    def reorderList(self, head):
         """
         Do not return anything, modify head in-place instead.
         """
-        # 求出单链表节点数
+        if not head and head.next:
+            return
+        # 将链表转换为数组
+        array = []
         p = head
-        count = 0
         while p:
-            p = p.next
-            count = count + 1
-
-        print(count)
-        # 计算
-        nodeMiddle = m.ceil((count - 1) / 2)
-        p = head
-        index = 0
-        middle = (count - 1) / 2
-        stack = []
-        while p: 
-            if index >= middle:
-                stack.append(p)
+            array.append(p)
             p = p.next
         
-        p = head
-        index = 0
-        while p:
-            if index < middle and index > 0:
-                b = stack.pop()
-                b.next = p.next
-                p.next = b
-            p = p.next
-# @lc code=end
+        array_size = len(array)
+        # i, j分别指向左右的两个结点
+        i = 0
+        j = array_size - 1
+        while i < j:
+            array[i].next = array[j]
+            i += 1
+            if i == j:
+                break
 
-if __name__ == '__main__':
-    head = buildListNode([1,2,3,4])
-    Solution().reorderList(head)
+            array[j].next = array[i]
+            j -= 1
+            array[j].next = None
+# @lc code=end
