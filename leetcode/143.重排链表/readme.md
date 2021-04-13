@@ -4,7 +4,7 @@
 #### 利用数组解题
 这里如果是数组的话，就很好操作，因为数组可以直接根据索引来找到元素。
 
-可是这里是单链表，只能单向遍历获取元素。**那我就把链表先转成数组，操作完再把数组转换为单链表。**
+可是这里是单链表，只能单向遍历获取元素。**那就用数组存放结点，数组可以方便的索引到对应位置的结点，然后处理结点的指针指向。**
 
 操作方法：
 1. 链表转换为数组
@@ -14,12 +14,9 @@
 ```py
 class Solution:
     def reorderList(self, head):
-        """
-        Do not return anything, modify head in-place instead.
-        """
         if not head and head.next:
             return
-        # 将链表转换为数组
+        # 将链表结点存放到数组中
         array = []
         p = head
         while p:
@@ -42,7 +39,7 @@ class Solution:
 ```
 
 #### 反转链表解题
-利用数组解题，空间复杂度O(n)，在LeetCode上看到了空间复杂度为O(1)的解法。
+利用数组解题，空间复杂度O(n)。这里寻求更好的解题方案，这个解题方法还是看到LeetCode答案才想到的。
 具体步骤如下：
 - 使用快慢指针找到链表的中点，并从中点分割成两个链表a和b
 - 将中点后的链表b反转
@@ -75,9 +72,6 @@ class Solution:
         return new_head
 
     def reorderList(self, head):
-        """
-        Do not return anything, modify head in-place instead.
-        """
         a,b = self._splitList(head)
         b = self._reverseList(b)
         

@@ -17,7 +17,7 @@ class Solution:
         """
         if not head and head.next:
             return
-        # 将链表转换为数组
+        # 将链表结点存放到数组中
         array = []
         p = head
         while p:
