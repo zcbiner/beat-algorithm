@@ -11,26 +11,25 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    # 从中点拆分成两个链表
-    def _splitList(self, head):
-        p_slow = head
-        p_fast = head
-        while p_fast and p_fast.next:
-            p_slow = p_slow.next
-            p_fast = p_fast.next.next
-        middle = p_slow.next
-        return head,middle
 
     def isPalindrome(self, head):
-        if not head:
-            return False
-        
-        a, b = self._splitList(head)
-        while b:
-            if a.val != b.val:
+        # 快慢指针找中点
+        p_slow = head
+        p_fast = head
+        # p_rev指向前半部分反转的链表
+        p_rev = None
+        while p_fast and p_fast.next:
+            p_temp = p_slow
+            p_slow = p_slow.next
+            p_fast = p_fast.next.next
+            p_temp.next = p_rev
+            p_rev = p_temp
+        if p_fast:
+            p_slow = p_slow.next
+        while p_rev and p_slow:
+            if p_rev.val != p_slow.val:
                 return False
-            a = a.next
-            b = b.next
+            p_rev = p_rev.next
+            p_slow = p_slow.next
         return True
 # @lc code=end
-
