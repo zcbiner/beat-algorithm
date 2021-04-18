@@ -15,15 +15,13 @@ class Solution:
         if head is None:
             return None
         prev = None
-        curr = head
-        while curr is not None:
-            # 先记录下一个节点，否则等下curr.next指向前一个结点会丢失
-            next_node = curr.next
+        while head:
+            # 先记录下一个节点，否则等下head.next指向前一个结点会造成丢失
+            next_node = head.next
             # 指向上一个结点完成翻转
-            curr.next = prev
-            prev = curr
-            curr = next_node
-        
+            head.next = prev
+            prev = head
+            head = next_node
         return prev
 
 # @lc code=end

@@ -1,4 +1,7 @@
 ### 题目
+> [两数相加。](https://leetcode-cn.com/problems/add-two-numbers/description/)
+
+
 给你两个非空的链表，表示两个非负的整数。它们每位数字都是按照逆序的方式存储的，并且每个节点只能存储一位数字。
 
 请你将两个数相加，并以相同形式返回一个表示和的链表。
@@ -35,7 +38,7 @@
 - 需要判断是否要进位
 - 如果两个链表长度不一样，需要处理。
 
-代码实现如下：
+[代码实现](solution.py)：
 
 ```py
 class Solution:
@@ -44,13 +47,13 @@ class Solution:
         p2 = l2
         result = ListNode(0, None)
         p_result = result
-        while p1 is not None or p2 is not None:
+        while p1 or p2:
             # val_sum为两个结点相加的和，初始化为p_result.val是因为它可能有进位的值。
             val_sum = p_result.val
-            if p1 is not None:
+            if p1:
                val_sum += p1.val
                p1 = p1.next
-            if p2 is not None:
+            if p2:
                val_sum += p2.val
                p2 = p2.next
             if val_sum >= 10:
@@ -60,7 +63,7 @@ class Solution:
             else:
                 p_result.val = val_sum
                 # 如果p1，p2为空了，和就没有下一个结点了
-                if p1 is not None or p2 is not None:
+                if p1 or p2:
                     p_result.next = ListNode(0, None)
             p_result = p_result.next
 
