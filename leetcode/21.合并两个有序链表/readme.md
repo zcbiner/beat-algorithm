@@ -26,8 +26,11 @@
 l1 和 l2 均按 非递减顺序 排列
 
 ### 解题
-这题也比较简单，同时遍历两个链表，判断结点大小，取较大结点即可。
-代码实现：
+
+这题与数组归并排序的合并操作是一样的。注意两个链表长度不一致时的处理即可。
+#### 解法一
+
+[代码实现](solution.py)：
 ```py
 class Solution:
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
@@ -59,7 +62,10 @@ class Solution:
         return result
 ```
 这是我一开始想到的解法，显然条件判断比较多，个人认为还是比较好理解的。那么别人是怎么解的呢？
-下面是LeetCode找到的高赞解法：
+
+#### 解法二
+
+下面是LeetCode找到的高赞解法，[代码实现](solution1.py)：
 ```py
 class Solution:
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
@@ -77,6 +83,4 @@ class Solution:
 ```
 可以看到代码简洁了很多，但是两种解法的时间复杂度都是一样的。我自己想的解法为什么代码量比较大呢？
 1. 没有使用哨兵结点，导致需要去对result结点判空
-2. 不清楚Python可以``cur.next = l1 or l2``这样的用法
-
-不过呢，使用哨兵结点的话，会导致有一个空余的结点，个人不太喜欢。
+2. 当两个链表长度不一致时，直接``cur.next = l1 or l2``将剩余的结点拼接上即可。
