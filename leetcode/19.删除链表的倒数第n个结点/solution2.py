@@ -12,18 +12,18 @@
 #         self.next = next
 class Solution:
     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
-        if head is None:
+        if not head:
             return None
-        p_fast = head
-        guard_node = ListNode(0, head)
-        p_pre = guard_node
+        fast = head
+        dummy = ListNode(0, head)
+        pre = dummy
         count = 1
-        while p_fast.next is not None:
+        while fast and fast.next:
             if count >= n:
-                p_pre = p_pre.next
-            p_fast = p_fast.next
-            count = count + 1
+                pre = pre.next
+            fast = fast.next
+            count += 1
         # 进行删除
-        p_pre.next = p_pre.next.next
-        return guard_node.next
+        pre.next = pre.next.next
+        return dummy.next
 # @lc code=end

@@ -78,4 +78,33 @@ class Solution:
 这个解法被Accepted了，但是有没有优化空间呢？看上面的图其实也可以看出，拿已经合并的链表和新的链表对比，已经合并的链表会越来越长，时间复杂度就会增加。这里想到可以用二分法的思路来做，将所有的链表两两分组，先把一组中的两个合并，合并完后跟另外一组的合并好的链表合并。图示如下：
 ![二分合并](solution2.png)
 
-代码实现如[文件](solution1.py)
+[代码实现](solution1.py):
+```py
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        if lists is None or len(lists) == 0:
+            return None
+        elif len(lists) == 1:
+            return lists[0]
+        
+        # 取中点
+        mid = len(lists) // 2
+        # 拆分链表
+        l1,l2 = self.mergeKLists(lists[:mid]), self.mergeKLists(lists[mid:])
+        # 两两合并
+        return self.merge_two_lists(l1, l2)
+
+    # 合并两个升序链表，查看21题的解法。
+    def merge_two_lists(self, l1: ListNode, l2: ListNode) -> ListNode:
+        dummy = cur = ListNode(0)
+        while l1 and l2:
+            if l1.val < l2.val:
+                cur.next = l1
+                l1 = l1.next
+            else:
+                cur.next = l2
+                l2 = l2.next
+            cur = cur.next
+        cur.next = l1 or l2
+        return dummy.next
+```

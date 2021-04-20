@@ -28,12 +28,37 @@
 ```py
 pre.next = pre.next.next
 ```
-这样就解决了问题，开始实现：
-[solution1](solution1.py)
+
+这样就解决了问题，[代码实现](solution1.py)：
+```py
+class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        if head is None:
+            return None
+        p_fast = head
+        p_slow = head
+        pre = head
+        for i in range(1, n):
+            if p_fast.next is None:
+                return None
+            p_fast = p_fast.next
+        while p_fast.next is not None:
+            if p_slow is not head:
+                pre = pre.next
+            p_fast = p_fast.next
+            p_slow = p_slow.next
+
+        # p_slow为头结点，说明要删除的是头结点
+        if p_slow is head:
+            return head.next
+        # 进行删除
+        pre.next = pre.next.next
+        return head
+```
 
 这里尤其要注意的是，如果p_slow停留在head，那说明要删除的结点就是head，这时就不能直接return head了，需要返回其next。
 
-### 优化解法
+### 哨兵结点优化解法
 第一种解法时间复杂度是ok的。那有没有什么问题呢？如下：
 ```py
 # p_slow为头结点，说明要删除的是头结点
@@ -50,9 +75,28 @@ if p_slow is head:
 ```py
 pre.next = pre.next.next
 ```
+[代码实现：](solution2.py)
+```py
+class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        if not head:
+            return None
+        fast = head
+        dummy = ListNode(0, head)
+        pre = dummy
+        count = 1
+        while fast and fast.next:
+            if count >= n:
+                pre = pre.next
+            fast = fast.next
+            count += 1
+        # 进行删除
+        pre.next = pre.next.next
+        return dummy.next
+```
 这个解法与解法一的时间复杂度是一样的。具体步骤为：
-1. 设置哨兵结点guard_node，chushih
-2. p_pre定义为要删除结点的前一个结点，初始化指向guard_node
-3. p_fast初始化指向头结点，开始遍历
-4. 当p_fast与p_pre相隔n（倒数第n个）时，两个指针一起遍历。
-5. 删除p_pre的下一个结点。
+1. 设置哨兵结点dummy
+2. pre定义为要删除结点的前一个结点，初始化指向dummy
+3. fast初始化指向头结点，开始遍历
+4. 当fast与pre相隔n（倒数第n个）时，两个指针一起遍历。
+5. 删除pre的下一个结点。
