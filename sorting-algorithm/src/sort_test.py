@@ -1,9 +1,11 @@
 # 排序算法的测试
 from bubble_sort import BubbleSort
+from insert_sort import InsertSort
+from select_sort import SelectSort
 
 
 def test_bubble_sort(nums):
-    BubbleSort().bubble_sort(nums)
+    BubbleSort().sort(nums)
     print(nums)
 
 if __name__ == '__main__':
