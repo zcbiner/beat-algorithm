@@ -33,3 +33,27 @@
 如果 s = "abcabcbb"，如何找出最长子串呢？
 既然是子串那么肯定是在原有字符串中进行截取，而滑动窗口可以很好的解决问题。
 
+左指针指向子串开始位置，右指针指向结束位置。向右移动指针，要保证左右指针间的子串没有重复的元素。
+而为了保证没有重复元素，将滑动窗口中的元素都添加到set中，右指针滑动时判断是否重复，不重复继续滑动，否则终止。
+
+```py
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        charSet = set()
+        ans = 0
+        # 滑动窗口的右指针
+        right = -1
+        sSize = len(s)
+        # i为左指针
+        for i in range(sSize):
+            # 左指针向前加1，就需要移除之前左指针的字符
+            if i > 0:
+                charSet.remove(s[i - 1])
+            # 滑动窗口右移
+            while right + 1 < sSize and s[right + 1] not in charSet:
+                right += 1
+                charSet.add(s[right])
+            ans = max(ans, right - i + 1)
+        return ans
+```
+
