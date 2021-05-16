@@ -46,8 +46,30 @@ class Solution:
             else:
                 return middle
 
-        if nums[right] < target:
-            return right + 1
-        elif nums[left] > target:
+        # 如果while循环中没有找到，说明数组中没有这个值。
+        # 此时的left即为要插入的位置
+        return left
+```
+
+上面是while循环的解法，当然还可以写成递归的形式：
+[代码实现:](solution1.py)
+```python
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        left = 0
+        right = len(nums) - 1
+        return self.search(nums, left, right, target)
+    
+    def search(self, nums: List[int], left: int, right: int, target: int) -> int:
+        if left > right:
             return left
+        
+        middle = left + (right - left) // 2
+        if nums[middle] == target:
+            return middle
+        elif nums[middle] > target:
+            right = middle - 1
+        else:
+            left = middle + 1
+        return self.search(nums, left, right, target)
 ```
