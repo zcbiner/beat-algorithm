@@ -87,3 +87,18 @@ class Solution:
                 start += 1
         return start
 ```
+
+一种代码简化的写法，快慢指针。快指针探测，将不等于val的数赋予慢指针。慢指针之前的数都是符合要求的。
+[代码实现：](solution2.py)
+```python
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+       slow = 0
+       fast = 0
+       for fast in range(len(nums)):
+           if nums[fast] != val:
+               nums[slow] = nums[fast]
+               slow += 1
+        
+       return slow
+```
