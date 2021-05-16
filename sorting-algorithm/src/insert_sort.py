@@ -1,4 +1,7 @@
-class InsertSort(object):
+from ISort import ISort
+
+class InsertSort(ISort):
+    
     def sort(self, arr):
         arr_size = len(arr)
         for i in range(1, arr_size):

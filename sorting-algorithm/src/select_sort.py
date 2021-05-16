@@ -1,4 +1,7 @@
-class SelectSort(object):
+from ISort import ISort
+
+class SelectSort(ISort):
+    
     def sort(self, arr):
         arr_size = len(arr)
         for i in range(arr_size):
