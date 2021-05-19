@@ -3,6 +3,7 @@
 from bubble_sort import BubbleSort
 from insert_sort import InsertSort
 from select_sort import SelectSort
+from merge_sort import MergeSort
 
 # 判断数组是否排序正确
 def checkSort(nums):
@@ -53,8 +54,11 @@ def testInsertSort(testList):
 def testSelectSort(testList):
     testSort(SelectSort(), testList)
 
+def testMergeSort(testList):
+    testSort(MergeSort(), testList)
 
 if __name__ == '__main__':
     testBubbleSort(getTestData())
     testInsertSort(getTestData())
     testSelectSort(getTestData())
+    testMergeSort(getTestData())

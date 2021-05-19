@@ -78,44 +78,53 @@ class InsertSort(ISort):
 ```
 
 #### 四、归并排序
-> 将长度为n的记录不断划分，划分到长度为1时，再两两合并，依次递归。主要是利用分治法来处理。
+归并排序使用的思想是分治思想，将一个大问题分解成小问题来解决。
 
-代码实现：
+归并排序的核心思想：如果要排序一个数组，我们先把数组从中间分成前后两部分，然后对前后两部分分别排序，再将排好序的两部分合并在一起，这样整个数组就都有序了。
 
-```
-@Override
-public int[] sort(int[] arr) {
-    mergeSort(arr, 0, arr.length - 1);
-    return arr;
-}
-private void mergeSort(int[] array, int start, int end) {
-    if (start >= end) return;
-    int middle = (start + end) / 2;
-    mergeSort(array, start, middle);
-    mergeSort(array, middle + 1, end);
-    merge(array, start, middle, end);
-}
-private void merge(int[] array, int start, int middle, int end) {
-    int[] aux = new int[end - start + 1];
-    System.arraycopy(array, start, aux, 0, end - start + 1);
-    int left = start;
-    int right = middle + 1;
-    for (int k = start; k <= end; k++) {
-        if (left > middle) {
-            array[k] = aux[right - start];
-            right++;
-        } else if (right > end) {
-            array[k] = aux[left - start];
-            left++;
-        } else if (aux[left - start] > aux[right - start]) {
-            array[k] = aux[right - start];
-            right++;
-        } else {
-            array[k] = aux[left - start];
-            left++;
-        }
-    }
-}
+[代码实现：](src/merge_sort.py)
+```python
+class MergeSort(ISort):
+    
+    def sort(self, arr):
+        left = 0
+        right = len(arr) - 1
+        self.mergeSort(arr, left, right)
+    
+    # 将数组从中间分为两部分，然后合并
+    def mergeSort(self, arr, left, right):
+        if left <= right:
+            return
+        mid = left + (right - left) // 2
+        self.mergeSort(arr, left, mid)
+        self.mergeSort(arr, mid, right)
+        self.merge(arr, left, mid, right)
+
+    # 合并两个数组，合并时要注意排序
+    def merge(self, arr, left, mid, right):
+        mergeNum = []
+        start = left
+        end = mid + 1
+        while start <= mid and end <= right:
+            if arr[start] <= arr[end]:
+                mergeNum.append(arr[start])
+                start += 1
+            else:
+                mergeNum.append(arr[end])
+                end += 1
+        
+        while start <= mid:
+            mergeNum.append(start)
+            start += 1
+        while end <= right:
+            mergeNum.append(end)
+            end += 1
+        
+        # 将辅助数组的数据拷贝回原数组
+        start = left
+        while start <= right:
+            arr[start] = mergeNum[start - left]
+            start += 1
 ```
 
 #### 五、堆排序
