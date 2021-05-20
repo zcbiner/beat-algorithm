@@ -1,4 +1,5 @@
-#coding=utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # 排序算法的测试
 from bubble_sort import BubbleSort
 from insert_sort import InsertSort
@@ -38,9 +39,11 @@ def getTestData():
 # 通用测试函数
 def testSort(iSort, testList):
     isAc = True
-    for nums in testList:
+    for index, nums in enumerate(testList):
         iSort.sort(nums)
+        print(nums)
         if not checkSort(nums):
+            isAc = False
             break
     info = type(iSort).__name__ + (' success' if isAc else ' failed')
     print(info)

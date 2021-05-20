@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from abc import ABCMeta, abstractmethod
 
 # 排序接口
