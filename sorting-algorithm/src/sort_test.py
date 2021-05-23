@@ -5,6 +5,7 @@ from bubble_sort import BubbleSort
 from insert_sort import InsertSort
 from select_sort import SelectSort
 from merge_sort import MergeSort
+from quick_sort import QuickSort
 
 # 判断数组是否排序正确
 def checkSort(nums):
@@ -60,8 +61,12 @@ def testSelectSort(testList):
 def testMergeSort(testList):
     testSort(MergeSort(), testList)
 
+def testQuickSort(testList):
+    testSort(QuickSort(), testList)
+
 if __name__ == '__main__':
-    testBubbleSort(getTestData())
-    testInsertSort(getTestData())
-    testSelectSort(getTestData())
-    testMergeSort(getTestData())
+    # testBubbleSort(getTestData())
+    # testInsertSort(getTestData())
+    # testSelectSort(getTestData())
+    # testMergeSort(getTestData())
+    testQuickSort(getTestData())

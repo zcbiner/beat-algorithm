@@ -199,7 +199,7 @@ while (gap >= 1) {
 注：希尔排序的gap取值不仅仅是arr.length/2这么简单，可以根据数据特性选取合适的值达到最高的运行效率。
 
 #### 七、快速排序
-> 通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。
+通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。
 
 步骤：
 
@@ -209,24 +209,29 @@ while (gap >= 1) {
 
 代码实现：
 
-```
-private void quickSort(int[] arr, int left, int right) {
-    if (left >= right) return;
-    int i = left, j = right, temp = arr[left];
-    while (i < j) {
-        while (i < j && arr[j] >= temp) {
-            j--;
-        }
-        while (i < j && arr[i] <= temp) {
-            i++;
-        }
-        if (i < j) {
-            SortUtil.swap(arr, i, j);
-        }
-    }
-    arr[left] = arr[i];
-    arr[i] = temp;
-    quickSort(arr, left, i - 1);
-    quickSort(arr, i + 1, right);
-}
+```python
+class QuickSort(ISort):
+    
+    def sort(self, arr):
+        self.quickSort(arr, 0, len(arr) - 1)
+    
+    def quickSort(self, arr, left, right):
+        if left >= right:
+            return
+        k = self.partition(arr, left, right)
+        self.quickSort(arr, left, k - 1)
+        self.quickSort(arr, k + 1, right)
+
+    def partition(self, arr, left, right):
+        # 默认取第一个元素为基准
+        point = arr[left]
+        while left < right:
+            while right > left and arr[right] >= point:
+                right -= 1
+            arr[right], arr[left] = arr[left], arr[right]
+
+            while right > left and arr[left] <= point:
+                left += 1
+            arr[left], arr[right] = arr[right], arr[left]
+        return left
 ```
