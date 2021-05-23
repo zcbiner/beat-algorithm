@@ -1,4 +1,4 @@
-### 排序算法
+### 前文
 
 O(n^2)的算法
    - 冒泡排序
@@ -77,7 +77,7 @@ class InsertSort(ISort):
                 arr[current_index] = temp
 ```
 
-#### 四、归并排序
+### 四、归并排序
 归并排序使用的思想是分治思想，将一个大问题分解成小问题来解决。
 
 归并排序的核心思想：如果要排序一个数组，我们先把数组从中间分成前后两部分，然后对前后两部分分别排序，再将排好序的两部分合并在一起，这样整个数组就都有序了。
@@ -127,7 +127,7 @@ class MergeSort(ISort):
             start += 1
 ```
 
-#### 五、堆排序
+### 五、堆排序
 > 堆排序就是利用堆进行排序的方法.基本思想是:将待排序的序列构造成一个大顶堆.此时,整个序列的最大值就是堆顶的根结点.将它移
 走(其实就是将其与堆数组的末尾元素交换, 此时末尾元素就是最大值),然后将剩余的n-1个序列重新构造成一个堆,这样就会得到n个元
 素的次大值.如此反复执行,便能得到一个有序序列了。
@@ -173,7 +173,7 @@ private void headAdjust(int[] arr, int parent, int len) {
 }
 ```
 
-#### 六、希尔排序
+### 六、希尔排序
 > 先将整个待排元素序列分割成若干子序列（由相隔某个“增量”的元素组成的）分别进行直接插入排序，然后依次缩减增量再进行排
 序，待整个序列中的元素基本有序（增量足够小）时，再对全体元素进行一次直接插入排序（增量为1）。其时间复杂度为O(n^3/2),要好于直接
 插入排序的O(n^2)
@@ -198,7 +198,8 @@ while (gap >= 1) {
 
 注：希尔排序的gap取值不仅仅是arr.length/2这么简单，可以根据数据特性选取合适的值达到最高的运行效率。
 
-#### 七、快速排序
+### 七、快速排序
+#### 1.快排原理及实现
 通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。
 
 步骤：
@@ -207,7 +208,7 @@ while (gap >= 1) {
 2. 分区过程，将比基准数大的放到右边，小于或等于它的数都放到左边。
 3. 再对左右区间递归执行第二步，直至各区间只有一个数。
 
-代码实现：
+[代码实现:](src/quick_sort.py)
 
 ```python
 class QuickSort(ISort):
@@ -233,5 +234,86 @@ class QuickSort(ISort):
             while right > left and arr[left] <= point:
                 left += 1
             arr[left], arr[right] = arr[right], arr[left]
+        return left
+```
+
+#### 2.优化：减少交换次数
+
+上面的实现里，每次left和right变动都要做两次交换，而每次交换其实都是基准值与left或者right定位到的值进行的交换，因此可以优化这里的交换次数。
+
+[代码实现:](src/quick_sort.py)
+```python
+# 优化：减少元素交换。  
+class QuickSort1(ISort):
+
+    def sort(self, arr):
+        self.quickSort(arr, 0, len(arr) - 1)
+    
+    def quickSort(self, arr, left, right):
+        if left >= right:
+            return
+        k = self.partition(arr, left, right)
+        self.quickSort(arr, left, k - 1)
+        self.quickSort(arr, k + 1, right)
+
+    def partition(self, arr, left, right):
+        # 默认取第一个元素为基准(注意这里记录的是基准的索引)
+        point = left
+        while left < right:
+            while right > left and arr[right] >= arr[point]:
+                right -= 1
+
+            while right > left and arr[left] <= arr[point]:
+                left += 1
+            
+            if left < right:
+                arr[left], arr[right] = arr[right], arr[left]
+        # 此时left=right，并且是基准值的合适位置，将基准值赋予arr[left]
+        arr[left], arr[point] = arr[point], arr[left]
+        return left
+```
+
+#### 3.优化：随机基准值
+
+**在待排序列是部分有序时，固定选取枢轴使快排效率底下，要缓解这种情况，就引入了随机选取枢轴**。
+思路：使用随机数生成函数生成一个随机数randInt，随机数的范围为[left, right]，将这个基准值与left交换，然后按照以上的排序进行操作即可。
+
+优点：这是一种相对安全的策略。由于枢轴的位置是随机的，那么产生的分割也不会总是会出现劣质的分割。在整个数组数字全相等时，仍然是最坏情况，时间复杂度是O(n^2）。实际上，随机化快速排序得到理论最坏情况的可能性仅为1/(2^n）。所以随机化快速排序可以对于绝大多数输入数据达到O(nlogn）的期望时间复杂度。
+
+[代码实现:](src/quick_sort.py)
+```python
+import random
+
+# 优化：随机选取基准值。 
+class QuickSort2(ISort):
+
+    def sort(self, arr):
+        self.quickSort(arr, 0, len(arr) - 1)
+    
+    def quickSort(self, arr, left, right):
+        if left >= right:
+            return
+        k = self.partition(arr, left, right)
+        self.quickSort(arr, left, k - 1)
+        self.quickSort(arr, k + 1, right)
+
+    def partition(self, arr, left, right):
+        # 随机选取基准值
+        randInt = random.randint(left, right)
+        # 将选取的基准值与left交换
+        arr[left], arr[randInt] = arr[randInt], arr[left]
+        # 交换完后，基准值还是left
+        point = left
+        while left < right:
+            while right > left and arr[right] >= arr[point]:
+                right -= 1
+
+            while right > left and arr[left] <= arr[point]:
+                left += 1
+            
+            if left < right:
+                arr[left], arr[right] = arr[right], arr[left]
+        # 此时left=right，并且是基准值的合适位置，将基准值赋予arr[left]
+        arr[left], arr[point] = arr[point], arr[left]
         return left
 ```
