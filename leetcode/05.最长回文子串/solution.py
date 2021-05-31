@@ -25,6 +25,5 @@ class Solution:
         while l >= 0 and r < s_len and s[l] == s[r]:
             l -= 1
             r += 1
-        
         return s[l + 1:r]
 # @lc code=end
