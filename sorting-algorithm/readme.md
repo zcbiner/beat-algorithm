@@ -93,11 +93,11 @@ class MergeSort(ISort):
     
     # 将数组从中间分为两部分，然后合并
     def mergeSort(self, arr, left, right):
-        if left <= right:
+        if left >= right:
             return
         mid = left + (right - left) // 2
         self.mergeSort(arr, left, mid)
-        self.mergeSort(arr, mid, right)
+        self.mergeSort(arr, mid + 1, right)
         self.merge(arr, left, mid, right)
 
     # 合并两个数组，合并时要注意排序
@@ -114,10 +114,10 @@ class MergeSort(ISort):
                 end += 1
         
         while start <= mid:
-            mergeNum.append(start)
+            mergeNum.append(arr[start])
             start += 1
         while end <= right:
-            mergeNum.append(end)
+            mergeNum.append(arr[end])
             end += 1
         
         # 将辅助数组的数据拷贝回原数组
