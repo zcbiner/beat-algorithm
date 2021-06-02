@@ -46,3 +46,40 @@ P     I
 
 ### 解题
 
+仔细观察，发现字符可以按行读取。比如这个有一个字符为：PAYPALISHIRING，行数为3时，Z字形排列为：
+
+```
+P   A   H   N
+A P L S I I G
+Y   I   R
+```
+
+创建一个数组为row_array，大小为3。第0行存的字符应该是PAHN，第二行应该是APLSIIG，第三行为YIR。将每行依次连接依赖就是转换后的结果：PAHNAPLSIIGYIR。
+
+因此在遍历字符串时，将字符依次放到第0，1，2行，放完后再递减，依次放到（2-1）行，(1-1)行，当行数为0时，又开始递增。
+
+[代码实现：](solution.py)
+
+```python
+class Solution:
+    def convert(self, s: str, numRows: int) -> str:
+        s_size = len(s)
+        if numRows == 1 or numRows >= s_size:
+            return s
+        
+        row_array = [''] * numRows
+        row = 0
+        step = 1
+        for c in s:
+            row_array[row] += c
+            if row == 0:
+                step = 1
+            elif row == numRows - 1:
+                step = -1
+            row += step
+        
+        return ''.join(row_array)
+```
+
+
+
