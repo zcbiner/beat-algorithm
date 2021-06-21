@@ -40,3 +40,55 @@
 
 进阶：
 你可以用 O(N) 的时间复杂度和 O(1) 的空间复杂度解决该问题吗？
+
+### 解题
+
+思路：使用双指针法。
+
+如果从字符串的尾部开始遍历，遇到#也是删除#前面的一个字符，不会影响尾部字符。
+因此从尾部开始遍历字符串。这里有三种情况：
+1. 当遇到了#，则s_skip += 1标明下一个字符是要被删除的，要跳过。s_right -= 1也跳过当前的字符。
+2. 当s_skip>0说明之前遇到了#，则当前字符是要被删除的，因此s_right -= 1，并将s_skip -= 1。
+3. 说明当前字符是保留的，需要跟另一个字符串同等位置的字符进行比较。
+
+
+[代码实现：](solution.py)
+```python
+class Solution:
+    def backspaceCompare(self, s: str, t: str) -> bool:
+        s_right = len(s) - 1
+        s_skip = 0
+        t_right = len(t) - 1
+        t_skip = 0
+        while s_right >= 0 or t_right >= 0:
+            while s_right >= 0:
+                if s[s_right] == '#':
+                    s_skip += 1
+                    s_right -= 1
+                elif s_skip > 0:
+                    s_skip -= 1
+                    s_right -= 1
+                else :
+                    break
+            
+            while t_right >= 0:
+                if t[t_right] == '#':
+                    t_skip += 1
+                    t_right -= 1
+                elif t_skip > 0:
+                    t_skip -= 1
+                    t_right -= 1
+                else :
+                    break
+            
+            if s_right >= 0 and t_right >= 0:
+                if s[s_right] != t[t_right]:
+                    return False
+            elif s_right >= 0 or t_right >= 0:
+                return False
+            
+            s_right -= 1
+            t_right -= 1
+        
+        return True
+```
