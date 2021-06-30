@@ -7,7 +7,6 @@
 # @lc code=start
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        if len(s) < len(t):
-            return False
+        
         
 # @lc code=end
