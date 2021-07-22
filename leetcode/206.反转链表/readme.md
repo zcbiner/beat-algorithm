@@ -20,8 +20,8 @@
 就是3个指针的操作。将当前结点的指针指向上一个结点。最后要注意更新结点。
 
 使用迭代解题，就是将当前结点指向上一个结点，然后更新当前结点到下一个结点。
-代码实现：
-```py
+[代码实现：](solution.py)
+```python
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
         if head is None:
@@ -39,7 +39,10 @@ class Solution:
 #### 递归解题
 
 使用递归解题，代码就简单多了。这里看做有两个链表，new_head指向已翻转的链表，head指向还未翻转的链表。将未翻转的头结点指向已翻转链表的头结点，并更新值。
-```py
+
+[代码实现:](solution1.py)
+
+```python
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
         return self.reverse_list(head, None)
@@ -52,3 +55,21 @@ class Solution:
         head.next = new_head
         return self.reverse_list(a, head)
 ```
+
+还有一种递归解法是这样的，感觉这种方式相当难以理解，但是想通了对递归的理解有很大的帮助。
+
+[代码实现:](solution2.py)
+
+```python
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        
+        new_node = self.reverseList(head.next)
+        node = head.next
+        node.next = head
+        head.next = None
+        return new_node
+```
+
