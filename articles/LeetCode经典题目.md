@@ -1,4 +1,4 @@
-> 力扣推荐的题目。
+> 整理LeetCode上Top interview questions。
 
 ### 模拟
 
