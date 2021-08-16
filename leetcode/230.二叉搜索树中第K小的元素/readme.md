@@ -32,3 +32,20 @@
 **进阶：**如果二叉搜索树经常被修改（插入/删除操作）并且你需要频繁地查找第 `k` 小的值，你将如何优化算法？
 
 ### 思路
+#### 先遍历再查找
+二叉搜索树的中序遍历即为已排序集合。因此通过中序遍历获取排序好的值，再找到第`k`小的值。
+```python
+class Solution:
+    def kthSmallest(self, root: TreeNode, k: int) -> int:
+        val_list = []
+        self._traversal(root, k, val_list)
+        return val_list[k - 1]
+
+    def _traversal(self, root: TreeNode, k: int, val_list: List[int]):
+        if not root:
+            return -1
+        
+        self._traversal(root.left, k, val_list)
+        val_list.append(root.val)
+        self._traversal(root.right, k, val_list)
+```
