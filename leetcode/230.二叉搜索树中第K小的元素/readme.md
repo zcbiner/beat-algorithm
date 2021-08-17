@@ -34,6 +34,7 @@
 ### 思路
 #### 先遍历再查找
 二叉搜索树的中序遍历即为已排序集合。因此通过中序遍历获取排序好的值，再找到第`k`小的值。
+[代码实现:](solution.py)
 ```python
 class Solution:
     def kthSmallest(self, root: TreeNode, k: int) -> int:
@@ -48,4 +49,26 @@ class Solution:
         self._traversal(root.left, k, val_list)
         val_list.append(root.val)
         self._traversal(root.right, k, val_list)
+```
+#### 优化解法
+上面的解题方案是没有问题的，然而我们还可以减少空间复杂度以及减少遍历次数。
+在遍历过程中，每遍历一次即减少k的值，当k==0时即为要找的元素。
+[代码实现:](solution1.py)
+```python
+class Solution:
+    def kthSmallest(self, root: TreeNode, k: int) -> int:
+        self.k = k
+        self._traversal(root)
+        return self.ans
+
+    def _traversal(self, root: TreeNode):
+        if not root:
+            return
+        
+        self._traversal(root.left)
+        self.k -= 1
+        if self.k == 0:
+            self.ans = root.val
+            return
+        self._traversal(root.right)
 ```

@@ -13,17 +13,19 @@
 #         self.right = right
 class Solution:
     def kthSmallest(self, root: TreeNode, k: int) -> int:
-        val_list = []
-        self._traversal(root, val_list)
-        return val_list[k - 1]
+        self.k = k
+        self._traversal(root)
+        return self.ans
 
-    def _traversal(self, root: TreeNode, val_list: List[int]):
+    def _traversal(self, root: TreeNode):
         if not root:
-            return -1
+            return
         
-        self._traversal(root.left, val_list)
-        val_list.append(root.val)
-        self._traversal(root.right, val_list)
-
+        self._traversal(root.left)
+        self.k -= 1
+        if self.k == 0:
+            self.ans = root.val
+            return
+        self._traversal(root.right)
 # @lc code=end
 
